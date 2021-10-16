@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Board</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $("#submit").click(function (){
+        $.ajax({
+            url     : "/insertOk",
+            type    : "POST",
+            data    : {
+                title:$("#title").val(),
+                content:$("#content").val()
+            },
+            success : function (data) {
+                alert(data.Msg);
+            },
+            error   : function (){
+                alert("err");
+            }
+        });
+    });
+
+    // $("#requestParam").click(function (){
+    //     var title = $("#title").val();
+    //     var content = $("#content").val();
+    //
+    //     var param = {
+    //         "title" : title,
+    //         "content" : content
+    //     }
+    //
+    //     $.ajax({
+    //         type : "POST",
+    //         data : JSON.stringify(param),
+    //         contentType : 'application/json',
+    //         url : "/modify",
+    //         dataType : "text",
+    //         success : function (data) {
+    //             alert("게시글 등록이 완료되었습니다.")
+    //             location.href="/board2"
+    //         },
+    //         error : function (jqXHR, textStatus, errorThrown) {
+    //             alert("Error : " + textStatus + " : " + errorThrown);
+    //         }
+    //     });
+    // });
+
+    // $("#map").click(function (){
+    //
+    //     var title = $("#title").val();
+    //     var content = $("#content").val();
+    //
+    //     $.ajax({
+    //         type : 'POST',
+    //         url : "/test",
+    //         data : {"title" : title, 'content' : content},
+    //         contentType : "application/json; charset=UTF-8",
+    //         success : function (data) {
+    //             alert("게시글 등록이 완료되었습니다.")
+    //             location.href="/board2"
+    //         },
+    //         error : function (jqXHR, textStatus, errorThrown) {
+    //             alert("Error : " + textStatus + " : " + errorThrown);
+    //         }
+    //     });
+    // });
+
+    $("#list_on_btn").on("click", function (){
+        listOn();
+    });
+});
+
+function listOn() {
+    $.ajax({
+        url: "/listOn",
+        type: "GET",
+        data: {
+        },
+        success : function (data) {
+
+            if (data.Code == 1){
+                for(i=0; i<data.data.length; i++){
+                    var tag = "<tr>" +
+                                    "<td>" + data.data[i].boardIdx + "</td>" +
+                                    "<td>" + data.data[i].title +"</td>" +
+                                    "<td>" + data.data[i].hitCnt +"</td>" +
+                                    "<td>" + data.data[i].createdDatetime +"</td>" +
+                        "</tr>"
+                    $("#list_on_tb").append(tag);
+                }
+            } else {
+                alert(data.Msg);
+            }
+        },
+        error : function (){
+            alert("err");
+        }
+    });
+}
+</script>
+
+<div class="container">
+    <h2>게시판 등록</h2>
+        <table class="board_detail">
+            <tr>
+                <td>제목</td>
+                <td><input type="text" id="title" name="title"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <textarea id="content" name="content"></textarea>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" id="submit" value="저장" class="btn">
+        <div id="list_on_btn" style=" cursor:pointer; background-color:#ddd; width:100px;">게시판 보기</div>
+        <h2>게시글 목록</h2>
+        <div id="list_on">
+            <table class="board_list" id="list_on_tb">
+                <colgroup>
+                    <col style="width: 15%;"/>
+                    <col style="width: 50%;"/>
+                    <col style="width: 15%;"/>
+                    <col style="width: 20%;"/>
+                </colgroup>
+                <thead>
+                <tr>
+                    <th scope="col">글번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">조회수</th>
+                    <th scope="col">작성일</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+
+</div>
+
+
+
+
+
+</body>
+</html>

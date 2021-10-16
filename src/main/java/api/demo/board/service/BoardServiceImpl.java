@@ -29,15 +29,31 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    public List<BoardDto> selectBoardList1(BoardDto boardDto) throws Exception{
+        log.debug("BoardService selectBoardList() start");
+        return boardMapper.selectBoardList1(boardDto);
+    }
+    @Override
     public void insertBoard(BoardDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception{
         log.debug("BoardService insertBoard(BoardDto board) start board => " + board);
         boardMapper.insertBoard(board);
-
         List<BoardFileDto> list = fileUtils.parseFileInfo(board.getBoardIdx(), multipartHttpServletRequest);
         if(CollectionUtils.isEmpty(list) == false){
             boardMapper.insertBoardFileList(list);
         }
 
+    }
+
+    @Override
+    public void insertBoard2(String title, String content){
+       boardMapper.insertBoard2(title, content);
+    }
+
+    @Override
+    public int insertBoard3(BoardDto board) throws Exception{
+        log.debug("BoardService insertBoard(BoardDto board) start board => " + board);
+        boardMapper.insertBoard3(board);
+        return 1;
     }
 
     @Override

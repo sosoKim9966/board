@@ -57,6 +57,7 @@
         <input type="button" id="delete" value="삭제하기">
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function (){
                 $("#list").on("click", function (){
@@ -64,20 +65,16 @@
                 });
 
                 $("#edit").on("click", function (){
-                    <!--$("input:hidden[name=_method]").value("put");-->
-                    $("#method").value("put");
-                    let frm = $("#frm")[0];
-                    <!--frm.action = "/board"+$("input:hidden[name=boardIdx]").value();-->
-                    frm.action = "/board/" + $("#boardIdx").value();
+                    $("input:hidden[name=_method]").val("put");
+                    var frm = $("#frm")[0];
+                    frm.action = "/board/"+$("input:hidden[name=boardIdx]").val();
                     frm.submit();
                 });
 
                 $("#delete").on("click", function (){
-                    <!--$("input:hidden[name=_method]").value("delete");-->
-                    $("#m").value("delete");
-                    let frm = $("#frm")[0];
-                    <!--frm.action = "/board"+$("input:hidden[name=boardIdx]").value();-->
-                    frm.action = "/board/" + $("#boardIdx").value();
+                    $("input:hidden[name=_method]").val("delete");
+                    var frm = $("#frm")[0];
+                    frm.action = "/board/"+$("input:hidden[name=boardIdx]").val();
                     frm.submit();
                 });
             })

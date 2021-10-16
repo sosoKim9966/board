@@ -13,6 +13,23 @@
                 t_board
             WHERE
                 deleted_yn = 'N'
+            ORDER BY created_datetime DESC
+        ]]>
+    </select>
+
+    <select id="selectBoardList1" parameterType="api.demo.board.dto.BoardDto" resultType="api.demo.board.dto.BoardDto" >
+        <![CDATA[
+            SELECT
+                board_idx,
+                title,
+                hit_cnt,
+                created_datetime
+            FROM
+                t_board
+            WHERE
+                deleted_yn = 'N'
+            AND
+                title = #{title}
             ORDER BY board_idx DESC
         ]]>
     </select>
@@ -68,6 +85,39 @@
             )
         ]]>
     </insert>
+
+    <insert id="insertBoard2" parameterType="map">
+        <![CDATA[
+            insert into t_board(
+                title,
+                content,
+                created_datetime,
+                creator_id
+            ) value (
+                #{title},
+                #{content},
+                NOW(),
+                'admin'
+                )
+        ]]>
+    </insert>
+
+    <insert id="insertBoard3" parameterType="map">
+        <![CDATA[
+        insert into t_board(
+            title,
+            content,
+            created_datetime,
+            creator_id
+        ) value (
+            #{title},
+            #{content},
+            NOW(),
+            'admin'
+            )
+        ]]>
+    </insert>
+
 
     <insert id="insertBoardFileList" parameterType="api.demo.board.dto.BoardFileDto">
         <![CDATA[

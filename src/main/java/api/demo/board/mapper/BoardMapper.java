@@ -12,7 +12,10 @@ import java.util.List;
 public interface BoardMapper {
 
     List<BoardDto> selectBoardList() throws Exception;
+    List<BoardDto> selectBoardList1(BoardDto boardDto) throws Exception;
     void insertBoard(BoardDto board) throws Exception;
+    void insertBoard2(@Param("title") String title, @Param("content") String content);
+    void insertBoard3(BoardDto boardDto) throws Exception;
     void updateHitCount(int boardIdx) throws Exception;
     BoardDto selectBoardDetail(int boardIdx) throws Exception;
     void updateBoard(BoardDto board) throws Exception;
